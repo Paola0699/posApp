@@ -27,6 +27,7 @@ function Products() {
     const [price, setPrice] = useState(0)
     const [cathegoriesList, setCathegoriesList] = useState([])
     const [productsList, setProductsList] = useState([])
+    const [filteredProductsList, setFilteredProductsList] = useState([])
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false)
@@ -96,8 +97,16 @@ function Products() {
                 }
             })
             setProductsList(allProd);
+            setFilteredProductsList(allProd)
         });
     }, [])
+
+    const filterProducts = filterBy => {
+        if (filterBy)
+            setFilteredProductsList(productsList.filter(product => product.cathegory === filterBy))
+        else
+            setFilteredProductsList(productsList)
+    }
 
     const columns = [
         {
@@ -106,8 +115,8 @@ function Products() {
             sortable: true,
         },
         {
-            name: 'Categoría',
-            selector: 'cathegory',
+            name: 'Descripción',
+            selector: 'description',
             sortable: true,
         },
         {
@@ -168,9 +177,11 @@ function Products() {
                         <div className='columns'>
                             <div className='column is-8'>
                                 <div class="select is-fullwidth">
-                                    <select>
-                                        <option>Filtrar Por Categoria</option>
-                                        <option>With options</option>
+                                    <select  onChange={e => filterProducts(e.target.value)}>
+                                        <option selected disabled value='0'>Seleccione una Categoría</option>
+                                        {cathegoriesList.map(cat =>
+                                            <option key={cat.id} value={cat.id}> {cat.name} </option>
+                                        )}
                                     </select>
                                 </div>
                             </div>
@@ -183,8 +194,9 @@ function Products() {
                                 <DataTable
                                     noHeader={true}
                                     columns={columns}
-                                    data={productsList}
+                                    data={filteredProductsList}
                                     pagination={true}
+                                    overflowY={true}
                                     paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina:', rangeSeparatorText: 'de' }}
                                 />
                             </div>
@@ -198,7 +210,6 @@ function Products() {
                 <div style={{ padding: '2.8rem' }}>
                     <h1 className="title">Nuevo Producto</h1>
                     <hr className="login-hr" />
-
                     <form className='columns' onSubmit={handleStepSubmit}>
                         <div className='column'>
                             <h3 class="title is-4">General</h3>
@@ -216,7 +227,7 @@ function Products() {
                                         <select ref={cathegoryRef} onChange={e => setCathegory(e.target.value)} >
                                             <option selected disabled value='0'>Seleccione una Categoría</option>
                                             {cathegoriesList.map(cat =>
-                                                <option key={cat.id} value={cat.name}> {cat.name} </option>
+                                                <option key={cat.id} value={cat.id}> {cat.name} </option>
                                             )}
                                         </select>
                                     </div>
@@ -243,13 +254,10 @@ function Products() {
                                     <input required ref={priceRef} onChange={e => setPrice(e.target.value)} class="input" type="number" />
                                 </div>
                             </div>
-
                             <Switch ref={statusRef} onChange={handleChange} checked={checked} />
                             <h3 class="title is-6">Vender en Punto de Venta</h3>
                             <p class="subtitle is-7">Haga que este producto esté activo y disponible a la venta en la tienda.</p>
-
                             {!name || !description || !cathegory || !provPrice || !price ? <button disabled type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button> : <button type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button>}
-
                         </div>
                     </form>
                 </div>
