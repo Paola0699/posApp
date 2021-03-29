@@ -46,12 +46,12 @@ function Suppliers() {
             <Navbar />
             <div class="container">
                 <div class="columns is-mobile">
-                    <div class="column is-3-desktop">
+                    <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
                         <Breadcrum />
-                        <Hero />
+                        <Hero  title='Proveedores' subtitle='Todos los Proveedores'/>
                         <br />
                         <div className='columns'>
                             <div className='column is-8'></div>

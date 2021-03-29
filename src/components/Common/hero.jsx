@@ -1,15 +1,11 @@
-
-function Hero() {
+function Hero(props) {
+    const { title, subtitle} = props;
     return (
-        <section class="hero is-info welcome is-small">
+        <section class="hero is-primary welcome">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">
-                        Hello, Admin.
-        </h1>
-                    <h2 class="subtitle">
-                        I hope you are having a great day!
-        </h2>
+                    <h1 class="title">{title}</h1>
+                    <h2 class="subtitle">{subtitle}</h2>
                 </div>
             </div>
         </section>

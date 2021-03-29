@@ -96,12 +96,12 @@ function Newsupplier() {
             <Navbar />
             <div class="container">
                 <div class="columns is-mobile">
-                    <div class="column is-3-desktop">
+                    <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile">
                         <Breadcrum />
-                        <Hero />
+                        <Hero title='Nuevo Proveedor' subtitle="Alta de proveedor"/>
                         <br />
                         <form onSubmit={handleStepSubmit} style={{ overflowY: 'scroll', height: '450px', overflowX: 'hidden' }}>
                             <div className='columns'>
