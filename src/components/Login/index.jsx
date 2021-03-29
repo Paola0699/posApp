@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import firebase from '../../firebaseElements/firebase'
-
+import POS from '../../pos.png'
 
 function Login() {
     const db = firebase.firestore();
@@ -56,43 +56,51 @@ function Login() {
     }
     return userType ? <Redirect to={'dashboard'} /> : (
         <div className="App">
-            <section className="hero is-success is-fullheight">
+            <section className="hero is-primary is-fullheight">
                 <div className="hero-body">
-                    <div className="container">
+                    <div className="container" style={{ margin: '0' }}>
                         <div className="columns is-centered">
-                            <div className="column is-5-tablet is-4-desktop is-5-widescreen">
-                                <form action="" className="box" onSubmit={handleSubmit} style={{padding: '10%'}}>
-                                    <div className="has-text-centered">
-                                        <h1 className="title is-3" style={{ color: '#555' }}>Iniciar sesión</h1>
-                                        <h2 className="subtitle is-6" style={{ color: '#757575' }}>Ingrese sus datos para continuar</h2>
-                                        <hr className="login-hr" />
+                            <div className="column is-5-tablet is-8-desktop">
+                                <div className='columns box'>
+                                    <div className='column is-hidden-mobile is-flex is-flex-direction-row is-align-items-center is-justify-content-center'>
+                                        <img src={POS}  style={{width:'70%'}}/>
                                     </div>
+                                    <div className='column'>
+                                        <form action="" onSubmit={handleSubmit} style={{ padding: '10%' }}>
+                                            <div className="has-text-centered">
+                                                <h1 className="title is-3" style={{ color: '#555' }}>Iniciar sesión</h1>
+                                                <h2 className="subtitle is-6" style={{ color: '#757575' }}>Ingrese sus datos para continuar</h2>
+                                                <hr className="login-hr" />
+                                            </div>
 
-                                    <div className="field">
-                                        <p className="control">
-                                            <input onChange={e => setMail(e.target.value)} className="input" type="email" placeholder="Usuario" />
-                                        </p>
-                                    </div>
+                                            <div className="field">
+                                                <p className="control">
+                                                    <input onChange={e => setMail(e.target.value)} className="input" type="email" placeholder="Usuario" />
+                                                </p>
+                                            </div>
 
-                                    <div className="field">
-                                        <p className="control">
-                                            <input onChange={e => setPass(e.target.value)} className="input" type="password" placeholder="Contraseña" />
-                                        </p>
-                                    </div>
+                                            <div className="field">
+                                                <p className="control">
+                                                    <input onChange={e => setPass(e.target.value)} className="input" type="password" placeholder="Contraseña" />
+                                                </p>
+                                            </div>
 
-                                    <hr className="login-hr" />
-                                    <div className="field">
-                                        <button type="submit" value="Submit" className="button is-primary is-fullwidth ">
-                                            Iniciar sesión
+                                            <hr className="login-hr" />
+                                            <div className="field" style={{ textAlign: 'center' }}>
+                                                <button type="submit" value="Submit" className="button is-warning is-fullwidth ">
+                                                    Iniciar sesión
                                         </button>
+                                                <a>¿Olvidaste tu contraseña?</a>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     )
 }
 export default Login;

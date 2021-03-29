@@ -4,7 +4,9 @@ import { Route, useRouteMatch } from "react-router-dom";
 import Helmet from "./Common/Helmet";
 import Switch from "./Common/Switch";
 import Login from './Login/index'
+import Cathegories from "./Views/cathegories";
 import Dashboard from "./Views/dashboard";
+import Products from "./Views/products";
 
 const routes = [
   {
@@ -14,6 +16,14 @@ const routes = [
   {
     path: "dashboard",
     component: <Dashboard />,
+  },
+  {
+    path: "productos",
+    component: <Products />,
+  },
+  {
+    path: "categorias",
+    component: <Cathegories />
   },
 ];
 

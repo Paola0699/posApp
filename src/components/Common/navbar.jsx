@@ -13,8 +13,8 @@ function close() {
 
 function Navbar() {
     const [isActive, setisActive] = useState(false);
-    return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
+    return ( 
+        <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <a className="navbar-item" href="#">
 
