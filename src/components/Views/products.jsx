@@ -11,6 +11,8 @@ import 'react-responsive-modal/styles.css';
 import Switch from "react-switch";
 import firebase from '../../firebaseElements/firebase'
 import Swal from 'sweetalert2'
+import CurrencyFormat from 'react-currency-format';
+
 
 function Products() {
     const db = firebase.firestore();
@@ -24,6 +26,7 @@ function Products() {
     const [provPrice, setProvPrice] = useState(0)
     const [price, setPrice] = useState(0)
     const [cathegoriesList, setCathegoriesList] = useState([])
+    const [productsList, setProductsList] = useState([])
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false)
@@ -45,21 +48,11 @@ function Products() {
     ]
 
     const handleChange = () => {
-        if (checked) {
-            setChecked(false)
-        } else {
-            setChecked(true)
-        }
+        setChecked(!checked)
     }
 
     const handleStepSubmit = e => {
         e.preventDefault();
-        console.log(name)
-        console.log(cathegory)
-        console.log(description)
-        console.log(provPrice)
-        console.log(price)
-        console.log(checked)
 
         db.collection("products").add({
             name: name,
@@ -68,12 +61,13 @@ function Products() {
             provPrice: Number(provPrice),
             price: Number(price),
             status: checked,
+            created: firebase.firestore.Timestamp.now(),
         }).then(() => {
             fields.forEach(field => field.current.value = '')
             Swal.fire({
                 icon: 'success',
                 title: 'Creado',
-                text: `¡El se ha creado con éxito!`,
+                text: `¡El producto se ha creado con éxito!`,
             })
         }).catch(error => {
             Swal.fire({
@@ -94,19 +88,69 @@ function Products() {
             })
             setCathegoriesList(allCats);
         });
+        db.collection("products").onSnapshot(doc => {
+            let allProd = doc.docs.map(prod => {
+                return {
+                    id: prod.id,
+                    ...prod.data()
+                }
+            })
+            setProductsList(allProd);
+        });
     }, [])
 
     const columns = [
         {
-            name: 'Title',
-            selector: 'title',
+            name: 'Nombre',
+            selector: 'name',
             sortable: true,
         },
         {
-            name: 'Year',
-            selector: 'year',
+            name: 'Categoría',
+            selector: 'cathegory',
             sortable: true,
-            right: true,
+        },
+        {
+            name: 'Costo Proveedor',
+            selector: row => row.provPrice,
+            cell: row => <CurrencyFormat
+                decimalScale={2}
+                fixedDecimalScale={true}
+                value={row.provPrice}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+            />,
+            sortable: true,
+        },
+        {
+            name: 'Precio Venta',
+            selector: row => row.price,
+            cell: row => <CurrencyFormat
+                decimalScale={2}
+                fixedDecimalScale={true}
+                value={row.price}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={'$'}
+            />,
+            sortable: true,
+        },
+        {
+            name: 'Status',
+            selector: 'status',
+            cell: row => <div>{row.status ? <h1 style={{ color: '#41af4b', fontWeight: '700' }}>Disponible</h1> : <h1 style={{ color: '#3a4953', fontWeight: '700' }}>No Disponible</h1>}</div>,
+            sortable: true,
+        },
+        {
+            name: 'Fecha Creación',
+            cell: row => row.created.toDate().toLocaleString('es-MX', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }),
+            sortable: true,
         },
     ];
     return (
@@ -134,11 +178,17 @@ function Products() {
                                 <button className='button is-fullwidth is-success' onClick={onOpenModal}>Agregar Producto</button>
                             </div>
                         </div>
-                        <DataTable
-                            title="Arnold Movies"
-                            columns={columns}
-                            data={data}
-                        />
+                        <div className='columns'>
+                            <div className='column box'>
+                                <DataTable
+                                    noHeader={true}
+                                    columns={columns}
+                                    data={productsList}
+                                    pagination={true}
+                                    paginationComponentOptions={{ rowsPerPageText: 'Filas por pagina:', rangeSeparatorText: 'de' }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,7 +206,7 @@ function Products() {
                             <div class="field">
                                 <label class="label">Nombre</label>
                                 <div class="control">
-                                    <input required  ref={nameRef} onChange={e => setName(e.target.value)} class="input" type="text" placeholder="Introduzca nombre del producto" />
+                                    <input required ref={nameRef} onChange={e => setName(e.target.value)} class="input" type="text" placeholder="Introduzca nombre del producto" />
                                 </div>
                             </div>
                             <div class="field">
@@ -164,9 +214,9 @@ function Products() {
                                 <div class="control">
                                     <div class="select is-fullwidth">
                                         <select ref={cathegoryRef} onChange={e => setCathegory(e.target.value)} >
-                                            <option selected disabled value=''>Seleccione una Categoría</option>
+                                            <option selected disabled value='0'>Seleccione una Categoría</option>
                                             {cathegoriesList.map(cat =>
-                                                <option key={cat.id} value={cat.id}> {cat.name} </option>
+                                                <option key={cat.id} value={cat.name}> {cat.name} </option>
                                             )}
                                         </select>
                                     </div>
@@ -175,7 +225,7 @@ function Products() {
                             <div class="field">
                                 <label class="label">Descripción</label>
                                 <div class="control">
-                                    <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)}  required class="textarea" placeholder="Escribe una breve descripción sobre el producto"></textarea>
+                                    <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)} required class="textarea" placeholder="Escribe una breve descripción sobre el producto"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -190,15 +240,16 @@ function Products() {
                             <div class="field">
                                 <label class="label">Precio de Venta</label>
                                 <div class="control">
-                                    <input required ref={priceRef} onChange={e => setPrice(e.target.value)}  class="input" type="number" />
+                                    <input required ref={priceRef} onChange={e => setPrice(e.target.value)} class="input" type="number" />
                                 </div>
                             </div>
 
-                            <Switch onChange={handleChange} checked={checked} />
+                            <Switch ref={statusRef} onChange={handleChange} checked={checked} />
                             <h3 class="title is-6">Vender en Punto de Venta</h3>
                             <p class="subtitle is-7">Haga que este producto esté activo y disponible a la venta en la tienda.</p>
 
-                            <button type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button>
+                            {!name || !description || !cathegory || !provPrice || !price ? <button disabled type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button> : <button type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button>}
+
                         </div>
                     </form>
                 </div>
