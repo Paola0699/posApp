@@ -6,7 +6,9 @@ import Switch from "./Common/Switch";
 import Login from './Login/index'
 import Cathegories from "./Views/cathegories";
 import Dashboard from "./Views/dashboard";
+import Newsupplier from "./Views/newsupplier";
 import Products from "./Views/products";
+import Suppliers from "./Views/suppliers";
 
 const routes = [
   {
@@ -24,6 +26,14 @@ const routes = [
   {
     path: "categorias",
     component: <Cathegories />
+  },
+  {
+    path: "proveedores",
+    component: <Suppliers />
+  },
+  {
+    path: "proveedores/nuevo-proveedor",
+    component: <Newsupplier/>
   },
 ];
 

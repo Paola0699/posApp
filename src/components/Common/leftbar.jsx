@@ -18,9 +18,9 @@ function Leftbar() {
             <p class="menu-label">
                 Productos</p>
             <ul class="menu-list">
-                <li><a>Productos</a></li>
-                <li><a>Categorías</a></li>
-                <li><a>Proveedores</a></li>
+                <li><Link to={`${process.env.PUBLIC_URL}/productos`} className="navbar-item">Productos</Link></li>
+                <li><Link to={`${process.env.PUBLIC_URL}/categorias`} className="navbar-item">Categorías</Link></li>
+                <li><Link to={`${process.env.PUBLIC_URL}/proveedores`} className="navbar-item">Proveedores</Link></li>
             </ul>
             <p class="menu-label">
                 Cerrar Sesión</p>

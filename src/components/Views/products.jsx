@@ -17,7 +17,6 @@ import CurrencyFormat from 'react-currency-format';
 function Products() {
     const db = firebase.firestore();
 
-    const data = [{ id: 1, title: 'Conan the Barbarian', year: '1982' }]
     const [open, setOpen] = useState(false);
     const [checked, setChecked] = useState(false)
     const [name, setName] = useState("")
@@ -102,7 +101,7 @@ function Products() {
     }, [])
 
     const filterProducts = filterBy => {
-        if (filterBy)
+        if (filterBy != '0')
             setFilteredProductsList(productsList.filter(product => product.cathegory === filterBy))
         else
             setFilteredProductsList(productsList)
@@ -177,8 +176,8 @@ function Products() {
                         <div className='columns'>
                             <div className='column is-8'>
                                 <div class="select is-fullwidth">
-                                    <select  onChange={e => filterProducts(e.target.value)}>
-                                        <option selected disabled value='0'>Seleccione una Categoría</option>
+                                    <select onChange={e => filterProducts(e.target.value)}>
+                                        <option selected value='0'>Seleccione una Categoría</option>
                                         {cathegoriesList.map(cat =>
                                             <option key={cat.id} value={cat.id}> {cat.name} </option>
                                         )}
