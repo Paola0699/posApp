@@ -24,9 +24,11 @@ function Products() {
     const [description, setDescription] = useState("")
     const [provPrice, setProvPrice] = useState(0)
     const [price, setPrice] = useState(0)
+    const [supplier, setSupplier] = useState("")
     const [cathegoriesList, setCathegoriesList] = useState([])
     const [productsList, setProductsList] = useState([])
     const [filteredProductsList, setFilteredProductsList] = useState([])
+    const [suppliersList, setSuppliersList] = useState([])
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false)
@@ -37,6 +39,7 @@ function Products() {
     const provPriceRef = useRef();
     const priceRef = useRef();
     const statusRef = useRef();
+    const supplierRef = useRef();
 
     const fields = [
         nameRef,
@@ -44,7 +47,8 @@ function Products() {
         descriptionRef,
         provPriceRef,
         priceRef,
-        statusRef
+        statusRef,
+        supplierRef,
     ]
 
     const handleChange = () => {
@@ -62,6 +66,7 @@ function Products() {
             price: Number(price),
             status: checked,
             created: firebase.firestore.Timestamp.now(),
+            supplier: supplier,
         }).then(() => {
             fields.forEach(field => field.current.value = '')
             Swal.fire({
@@ -97,6 +102,15 @@ function Products() {
             })
             setProductsList(allProd);
             setFilteredProductsList(allProd)
+        });
+        db.collection("supplier").onSnapshot(doc => {
+            let allSup = doc.docs.map(sup => {
+                return {
+                    id: sup.id,
+                    ...sup.data()
+                }
+            })
+            setSuppliersList(allSup);
         });
     }, [])
 
@@ -170,8 +184,8 @@ function Products() {
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
-                        <Breadcrum/>
-                        <Hero title="Productos" subtitle="Todos los Productos"/>
+                        <Breadcrum />
+                        <Hero title="Productos" subtitle="Todos los Productos" />
                         <br />
                         <div className='columns'>
                             <div className='column is-8'>
@@ -240,6 +254,19 @@ function Products() {
                             </div>
                         </div>
                         <div className='column'>
+                            <div class="field">
+                                <label class="label">Proveedor</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select  ref={supplierRef} onChange={e => setSupplier(e.target.value)}>
+                                            <option selected disabled value=''>Seleccione un Proveedor</option>
+                                            {suppliersList.map(sup =>
+                                                <option key={sup.id} value={sup.nickName}> {sup.nickName} </option>
+                                            )}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <h3 class="title is-4">Precio</h3>
                             <div class="field">
                                 <label class="label">Costo Proveedor</label>
