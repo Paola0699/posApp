@@ -12,8 +12,8 @@ function Leftbar() {
             <p class="menu-label">
                 Ventas</p>
             <ul class="menu-list">
-                <li><a>Nueva Venta</a></li>
-                <li><a>Historial de Ventas</a></li>
+                <li><Link to={`${process.env.PUBLIC_URL}/nueva-venta`} className="navbar-item">Nueva Venta</Link></li>
+                <li><Link to={`${process.env.PUBLIC_URL}/ventas`} className="navbar-item">Historial de Ventas</Link></li>
             </ul>
             <p class="menu-label">
                 Productos</p>

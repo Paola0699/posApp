@@ -9,6 +9,7 @@ import Dashboard from "./Views/dashboard";
 import Newsale from "./Views/newsale";
 import Newsupplier from "./Views/newsupplier";
 import Products from "./Views/products";
+import Sales from "./Views/sales";
 import Suppliers from "./Views/suppliers";
 
 const routes = [
@@ -39,6 +40,10 @@ const routes = [
   {
     path: "nueva-venta",
     component: <Newsale />
+  },
+  {
+    path: "ventas",
+    component: <Sales />
   },
 ];
 
