@@ -6,6 +6,7 @@ import Switch from "./Common/Switch";
 import Login from './Login/index'
 import Cathegories from "./Views/cathegories";
 import Dashboard from "./Views/dashboard";
+import Newsale from "./Views/newsale";
 import Newsupplier from "./Views/newsupplier";
 import Products from "./Views/products";
 import Suppliers from "./Views/suppliers";
@@ -33,7 +34,11 @@ const routes = [
   },
   {
     path: "proveedores/nuevo-proveedor",
-    component: <Newsupplier/>
+    component: <Newsupplier />
+  },
+  {
+    path: "nueva-venta",
+    component: <Newsale />
   },
 ];
 
