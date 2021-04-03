@@ -32,8 +32,7 @@ function Newsale() {
     const [orderProducts, setOrderProducts] = useState([])
     const [open, setOpen] = useState(false);
     const [payMethod, setPayMethod] = useState('cash')
-    const [redirect, setRedirect] = useState(false)
-    const [usertype, setUser] = useState('')
+    const [userType, setUserType] = useState(false)
 
 
     useEffect(() => {
@@ -155,7 +154,15 @@ function Newsale() {
             setOpen(false);
         }
     }
-    return redirect ? <Redirect to='/' /> : (
+
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+        }
+        else
+            setUserType(true)
+    });
+
+    return  userType ? <Redirect to={''} /> :  (
         <>
             <Navbar />
             <div class="container">
