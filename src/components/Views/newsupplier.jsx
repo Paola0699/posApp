@@ -6,6 +6,7 @@ import Leftbar from "../Common/leftbar";
 import Navbar from "../Common/navbar"
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 function Newsupplier() {
     const db = firebase.firestore();
@@ -24,6 +25,7 @@ function Newsupplier() {
     const [postCode, setPostCode] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
+    const [userType, setUserType] = useState(false)
 
     const nickNameRef = useRef();
     const descriptionRef = useRef();
@@ -90,8 +92,14 @@ function Newsupplier() {
             })
         })
     }
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+        }
+        else
+            setUserType(true)
+    });
 
-    return (
+    return userType ? <Redirect to={''} /> : (
         <>
             <Navbar />
             <div class="container">

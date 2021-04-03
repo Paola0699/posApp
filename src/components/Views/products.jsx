@@ -29,6 +29,7 @@ function Products() {
     const [productsList, setProductsList] = useState([])
     const [filteredProductsList, setFilteredProductsList] = useState([])
     const [suppliersList, setSuppliersList] = useState([])
+    const [userType, setUserType] = useState(false)
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false)
@@ -175,7 +176,13 @@ function Products() {
             sortable: true,
         },
     ];
-    return (
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+        }
+        else
+            setUserType(true)
+    });
+    return userType ? <Redirect to={''} /> : (
         <>
             <Navbar />
             <div class="container">

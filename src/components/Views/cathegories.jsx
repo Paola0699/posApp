@@ -15,6 +15,7 @@ function Cathegories() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [cathegoriesList, setCathegoriesList] = useState([])
+    const [userType, setUserType] = useState(false)
 
     const nameRef = useRef();
     const descriptionRef = useRef();
@@ -73,7 +74,13 @@ function Cathegories() {
             right: true,
         },
     ];
-    return (
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+        }
+        else
+            setUserType(true)
+    });
+    return  userType ? <Redirect to={''} /> : (
         <>
             <Navbar />
             <div class="container">
