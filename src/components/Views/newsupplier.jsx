@@ -198,7 +198,7 @@ function Newsupplier() {
                                 </div>
                                 <div className='column is-4'>
                                     <div class="field">
-                                        <label class="label">Calle</label>
+                                        <label class="label">Número</label>
                                         <div class="control">
                                             <input ref={street2Ref} onChange={e => setStreet2(e.target.value)} required class="input" type="text" />
                                         </div>

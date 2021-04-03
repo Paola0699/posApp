@@ -258,7 +258,7 @@ function Newsale() {
                                         </div>
                                     </div>
                                 </div>
-                                <br />
+                                
                                 <button onClick={() => setOpen(true)} disabled={orderProducts.length > 0 ? false : true} className='button is-success is-fullwidth'>CONFIRMAR ORDEN</button>
                             </div>
                         </div>
