@@ -15,7 +15,8 @@ function Cathegories() {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [cathegoriesList, setCathegoriesList] = useState([])
-    const [userType, setUserType] = useState(false)
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
 
     const nameRef = useRef();
     const descriptionRef = useRef();
@@ -74,22 +75,29 @@ function Cathegories() {
             right: true,
         },
     ];
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
         }
-        else
-            setUserType(true)
     });
-    return  userType ? <Redirect to={''} /> : (
+    return  redirect ? <Redirect to={''} /> : (
         <>
-            <Navbar />
+            {usertype === "admin" ? <Navbar /> : null }
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
-                        <Breadcrum />
+                        <Breadcrum  parent='Inicio' children='Categorias'/>
                         <Hero title='Categorías' subtitle='Todas las Categorías' />
                         <br />
                         <div className='columns'>

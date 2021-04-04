@@ -13,9 +13,10 @@ import memoize from 'memoize-one';
 function Suppliers() {
     const db = firebase.firestore();
     const [suppliersList, setSuppliersList] = useState([]);
-    const [userType, setUserType] = useState(false)
     const [open, setOpen] = useState(false);
     const [locationDetail, setlocationDetail] = useState()
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
 
     useEffect(() => {
         db.collection("supplier").onSnapshot(doc => {
@@ -50,27 +51,34 @@ function Suppliers() {
         },
     ]);
 
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
         }
-        else
-            setUserType(true)
     });
 
     const selectProduct = pro => {
         setlocationDetail(pro)
     }
 
-    return userType ? <Redirect to={''} /> : (
+    return redirect ? <Redirect to={''} /> : (
         <>
-            <Navbar />
+            {usertype === "admin" ? <Navbar /> : null }
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
-                        <Breadcrum />
+                        <Breadcrum  parent='Inicio' children='Proveedores' />
                         <Hero title='Proveedores' subtitle='Todos los Proveedores' />
                         <br />
                         <div className='columns'>

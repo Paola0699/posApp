@@ -9,6 +9,7 @@ import Navbar from "../Common/navbar"
 import Hero from "../Common/hero";
 import Breadcrum from "../Common/breadcrum";
 import Leftbar from "../Common/leftbar";
+import Navbaruser from "../Common/navbaruser";
 
 const db = firebase.firestore();
 const quantityButtonStyle = {
@@ -32,8 +33,8 @@ function Newsale() {
     const [orderProducts, setOrderProducts] = useState([])
     const [open, setOpen] = useState(false);
     const [payMethod, setPayMethod] = useState('cash')
-    const [userType, setUserType] = useState(false)
-
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
 
     useEffect(() => {
         db.collection("products").onSnapshot(doc => {
@@ -155,26 +156,33 @@ function Newsale() {
         }
     }
 
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
         }
-        else
-            setUserType(true)
     });
 
-    return  userType ? <Redirect to={''} /> :  (
+    return redirect ? <Redirect to={''} /> : (
         <>
             <Navbar />
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
-                        <Leftbar />
+                        {usertype === "admin" ? <Leftbar /> : <Navbaruser />}
                     </div>
-                    <div class="column is-9-desktop is-12-mobile"  style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
-                        <Breadcrum />
+                    <div class="column is-9-desktop is-12-mobile" style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
+                        <Breadcrum parent='Inicio' children='Nueva Venta' />
                         <Hero title="Nueva Venta" subtitle="Crear nueva venta" />
-                        <br/>
-                        
+                        <br />
+
                         <div className='columns'>
                             <div className="column">
                                 <label>Seleccione Categoría:</label>
@@ -191,8 +199,6 @@ function Newsale() {
                                 </div>
                             </div>
                         </div>
-
-
                         <div className='columns'>
                             <div className="column">
                                 <div className='card'>
@@ -265,7 +271,7 @@ function Newsale() {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <button onClick={() => setOpen(true)} disabled={orderProducts.length > 0 ? false : true} className='button is-success is-fullwidth'>CONFIRMAR ORDEN</button>
                             </div>
                         </div>

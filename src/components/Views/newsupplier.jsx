@@ -25,7 +25,8 @@ function Newsupplier() {
     const [postCode, setPostCode] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    const [userType, setUserType] = useState(false)
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
 
     const nickNameRef = useRef();
     const descriptionRef = useRef();
@@ -92,23 +93,30 @@ function Newsupplier() {
             })
         })
     }
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
         }
-        else
-            setUserType(true)
     });
 
-    return userType ? <Redirect to={''} /> : (
+    return redirect ? <Redirect to={''} /> : (
         <>
-            <Navbar />
+            {usertype === "admin" ? <Navbar /> : null }
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile">
-                        <Breadcrum />
+                        <Breadcrum  parent='Inicio' children='Nuevo Proveedor' />
                         <Hero title='Nuevo Proveedor' subtitle="Alta de proveedor"/>
                         <br />
                         <form onSubmit={handleStepSubmit} style={{ overflowY: 'scroll', height: '450px', overflowX: 'hidden' }}>

@@ -6,14 +6,7 @@ import POS from '../../pos.png'
 
 function Login() {
     const db = firebase.firestore();
-    async function getUserType(user, setUserType) {
-        const userType = await db.doc('accounts').collection("accounts").doc(user.uid).get()
-        if (userType.exists)
-            db.doc('accounts').collection("accounts").doc(user.uid).onSnapshot((doc) => {
-                if (doc.data().type === 'admin')
-                    setUserType('admin')
-            });
-    }
+
     function singIn(email, password) {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {

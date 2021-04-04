@@ -29,7 +29,8 @@ function Products() {
     const [productsList, setProductsList] = useState([])
     const [filteredProductsList, setFilteredProductsList] = useState([])
     const [suppliersList, setSuppliersList] = useState([])
-    const [userType, setUserType] = useState(false)
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
 
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false)
@@ -176,22 +177,31 @@ function Products() {
             sortable: true,
         },
     ];
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
         }
-        else
-            setUserType(true)
     });
-    return userType ? <Redirect to={''} /> : (
+    return redirect ? <Redirect to={''} /> : (
         <>
-            <Navbar />
+
+            {usertype === "admin" ? <Navbar /> : null }
+
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
-                        <Breadcrum />
+                        <Breadcrum parent='Inicio' children='Productos' />
                         <Hero title="Productos" subtitle="Todos los Productos" />
                         <br />
                         <div className='columns'>
@@ -265,7 +275,7 @@ function Products() {
                                 <label class="label">Proveedor</label>
                                 <div class="control">
                                     <div class="select is-fullwidth">
-                                        <select  ref={supplierRef} onChange={e => setSupplier(e.target.value)}>
+                                        <select ref={supplierRef} onChange={e => setSupplier(e.target.value)}>
                                             <option selected disabled value=''>Seleccione un Proveedor</option>
                                             {suppliersList.map(sup =>
                                                 <option key={sup.id} value={sup.nickName}> {sup.nickName} </option>

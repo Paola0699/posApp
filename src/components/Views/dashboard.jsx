@@ -4,21 +4,42 @@ import Breadcrum from "../Common/breadcrum";
 import Hero from "../Common/hero";
 import Leftbar from "../Common/leftbar";
 import Navbar from "../Common/navbar"
+import Navbaruser from "../Common/navbaruser";
 import '../styles.scss';
+import firebase from '../../firebaseElements/firebase'
+
 
 function Dashboard() {
-    return (
+    const db = firebase.firestore();
+
+    const [redirect, setRedirect] = useState(false);
+    const [usertype, setUser] = useState('')
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            db.collection("accounts").doc(user.uid).onSnapshot((doc) => {
+                if (doc.data().type === 'admin') {
+                    setUser("admin")
+                }
+                else setUser("user")
+            })
+        } else {
+            setRedirect(true)
+            console.log("No estoy loggeado")
+        }
+    });
+    return redirect ? <Redirect to={''} /> : (
         <>
             <Navbar />
             <div class="container">
                 <div class="columns is-mobile">
                     <div class="column is-3-desktop is-hidden-mobile">
-                        <Leftbar />
+                        {usertype === "admin" ? <Leftbar /> : <Navbaruser />}
                     </div>
                     <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
-                        <Breadcrum title='Productos' subtitle='Todos los Productos' />
-                        <Hero />
-                        <section class="info-tiles">
+                        <Breadcrum />
+                        <Hero title="Inicio" subtitle="Bienvenido Administrador" />
+                        {/*  <section class="info-tiles">
                             <div class="tile is-ancestor has-text-centered">
                                 <div class="tile is-parent">
                                     <article class="tile is-child box">
@@ -45,8 +66,8 @@ function Dashboard() {
                                     </article>
                                 </div>
                             </div>
-                        </section>
-                        <div class="columns">
+                        </section> */}
+                        {/* <div class="columns">
                             <div class="column is-6">
                                 <div class="card events-card">
                                     <header class="card-header">
@@ -169,7 +190,7 @@ function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
