@@ -61,7 +61,6 @@ function Suppliers() {
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
 
@@ -72,12 +71,12 @@ function Suppliers() {
     return redirect ? <Redirect to={''} /> : (
         <>
             {usertype === "admin" ? <Navbar /> : null }
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
-                    <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
+                    <div className="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
                         <Breadcrum  parent='Inicio' children='Proveedores' />
                         <Hero title='Proveedores' subtitle='Todos los Proveedores' />
                         <br />
@@ -110,51 +109,51 @@ function Suppliers() {
                     <h1 className="title">0{locationDetail.id}</h1>
                     <div className='columns'>
                         <div className='column'>
-                            <h3 class="title is-4">General</h3>
-                            <div class="field">
-                                <label class="label">Identificador Proveedor</label>
-                                <div class="control">
+                            <h3 className="title is-4">General</h3>
+                            <div className="field">
+                                <label className="label">Identificador Proveedor</label>
+                                <div className="control">
                                     {locationDetail.nickName} 
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Descripción</label>
-                                <div class="control">
+                            <div className="field">
+                                <label className="label">Descripción</label>
+                                <div className="control">
                                     {locationDetail.description}
                                 </div>
                             </div>
-                            <h3 class="title is-4">Dirección</h3>
-                            <div class="field">
-                                <label class="label">Domicilio</label>
-                                <div class="control">
+                            <h3 className="title is-4">Dirección</h3>
+                            <div className="field">
+                                <label className="label">Domicilio</label>
+                                <div className="control">
                                     {locationDetail.street + ' ' + locationDetail.street2 + ' ,  ' + locationDetail.suburb + " , " + locationDetail.postCode + ' , ' + locationDetail.state + ' , ' + locationDetail.country}
                                 </div>
                             </div>
 
                         </div>
                         <div className='column'>
-                            <h3 class="title is-4">Información de Contacto</h3>
-                            <div class="field">
-                                <label class="label">Nombre Proveedor</label>
-                                <div class="control">
+                            <h3 className="title is-4">Información de Contacto</h3>
+                            <div className="field">
+                                <label className="label">Nombre Proveedor</label>
+                                <div className="control">
                                     {locationDetail.name + " " + locationDetail.lastName}
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Compañía</label>
-                                <div class="control">
+                            <div className="field">
+                                <label className="label">Compañía</label>
+                                <div className="control">
                                     {locationDetail.company}
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Teléfonos</label>
-                                <div class="control">
+                            <div className="field">
+                                <label className="label">Teléfonos</label>
+                                <div className="control">
                                     {locationDetail.phone + "  |  " + locationDetail.cellphone}
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Email</label>
-                                <div class="control">
+                            <div className="field">
+                                <label className="label">Email</label>
+                                <div className="control">
                                     {locationDetail.email}
                                 </div>
                             </div>

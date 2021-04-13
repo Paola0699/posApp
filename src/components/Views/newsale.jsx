@@ -92,7 +92,6 @@ function Newsale() {
     }
     const order = () => {
         if (payMethod === 'debit' || payMethod === 'credit') {
-            console.log('handeled')
             Swal.fire({
                 title: '¿Pasó la tarjeta?',
                 text: "Confirma el cobro en tu terminal antes de registrar la compra",
@@ -166,19 +165,18 @@ function Newsale() {
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
 
     return redirect ? <Redirect to={''} /> : (
         <>
             <Navbar />
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         {usertype === "admin" ? <Leftbar /> : <Navbaruser />}
                     </div>
-                    <div class="column is-9-desktop is-12-mobile" style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
+                    <div className="column is-9-desktop is-12-mobile" style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
                         <Breadcrum parent='Inicio' children='Nueva Venta' />
                         <Hero title="Nueva Venta" subtitle="Crear nueva venta" />
                         <br />
@@ -282,8 +280,8 @@ function Newsale() {
             <Modal open={open} onClose={() => setOpen(false)} center >
                 <div style={{ padding: '2.5rem' }}>
                     <div className="modal-header">
-                        <h1 class="title">Confirmar Orden</h1>
-                        <h2 class="subtitle">Confirmación de la orden</h2>
+                        <h1 className="title">Confirmar Orden</h1>
+                        <h2 className="subtitle">Confirmación de la orden</h2>
                     </div>
                     <div className="modal-body">
                         <br />

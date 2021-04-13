@@ -187,7 +187,6 @@ function Products() {
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
     return redirect ? <Redirect to={''} /> : (
@@ -195,18 +194,18 @@ function Products() {
 
             {usertype === "admin" ? <Navbar /> : null }
 
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
-                    <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
+                    <div className="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
                         <Breadcrum parent='Inicio' children='Productos' />
                         <Hero title="Productos" subtitle="Todos los Productos" />
                         <br />
                         <div className='columns'>
                             <div className='column is-8'>
-                                <div class="select is-fullwidth">
+                                <div className="select is-fullwidth">
                                     <select onChange={e => filterProducts(e.target.value)}>
                                         <option selected value='0'>Seleccione una Categoría</option>
                                         {cathegoriesList.map(cat =>
@@ -242,18 +241,18 @@ function Products() {
                     <hr className="login-hr" />
                     <form className='columns' onSubmit={handleStepSubmit}>
                         <div className='column'>
-                            <h3 class="title is-4">General</h3>
-                            <p class="subtitle is-6">Cambie la información general de este producto.</p>
-                            <div class="field">
-                                <label class="label">Nombre</label>
-                                <div class="control">
-                                    <input required ref={nameRef} onChange={e => setName(e.target.value)} class="input" type="text" placeholder="Introduzca nombre del producto" />
+                            <h3 className="title is-4">General</h3>
+                            <p className="subtitle is-6">Cambie la información general de este producto.</p>
+                            <div className="field">
+                                <label className="label">Nombre</label>
+                                <div className="control">
+                                    <input required ref={nameRef} onChange={e => setName(e.target.value)} className="input" type="text" placeholder="Introduzca nombre del producto" />
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Categoría</label>
-                                <div class="control">
-                                    <div class="select is-fullwidth">
+                            <div className="field">
+                                <label className="label">Categoría</label>
+                                <div className="control">
+                                    <div className="select is-fullwidth">
                                         <select ref={cathegoryRef} onChange={e => setCathegory(e.target.value)} >
                                             <option selected disabled value='0'>Seleccione una Categoría</option>
                                             {cathegoriesList.map(cat =>
@@ -263,18 +262,18 @@ function Products() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Descripción</label>
-                                <div class="control">
-                                    <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)} required class="textarea" placeholder="Escribe una breve descripción sobre el producto"></textarea>
+                            <div className="field">
+                                <label className="label">Descripción</label>
+                                <div className="control">
+                                    <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)} required className="textarea" placeholder="Escribe una breve descripción sobre el producto"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div className='column'>
-                            <div class="field">
-                                <label class="label">Proveedor</label>
-                                <div class="control">
-                                    <div class="select is-fullwidth">
+                            <div className="field">
+                                <label className="label">Proveedor</label>
+                                <div className="control">
+                                    <div className="select is-fullwidth">
                                         <select ref={supplierRef} onChange={e => setSupplier(e.target.value)}>
                                             <option selected disabled value=''>Seleccione un Proveedor</option>
                                             {suppliersList.map(sup =>
@@ -284,22 +283,22 @@ function Products() {
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="title is-4">Precio</h3>
-                            <div class="field">
-                                <label class="label">Costo Proveedor</label>
-                                <div class="control">
-                                    <input required ref={provPriceRef} onChange={e => setProvPrice(e.target.value)} class="input" type="number" />
+                            <h3 className="title is-4">Precio</h3>
+                            <div className="field">
+                                <label className="label">Costo Proveedor</label>
+                                <div className="control">
+                                    <input required ref={provPriceRef} onChange={e => setProvPrice(e.target.value)} className="input" type="number" />
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Precio de Venta</label>
-                                <div class="control">
-                                    <input required ref={priceRef} onChange={e => setPrice(e.target.value)} class="input" type="number" />
+                            <div className="field">
+                                <label className="label">Precio de Venta</label>
+                                <div className="control">
+                                    <input required ref={priceRef} onChange={e => setPrice(e.target.value)} className="input" type="number" />
                                 </div>
                             </div>
                             <Switch ref={statusRef} onChange={handleChange} checked={checked} />
-                            <h3 class="title is-6">Vender en Punto de Venta</h3>
-                            <p class="subtitle is-7">Haga que este producto esté activo y disponible a la venta en la tienda.</p>
+                            <h3 className="title is-6">Vender en Punto de Venta</h3>
+                            <p className="subtitle is-7">Haga que este producto esté activo y disponible a la venta en la tienda.</p>
                             {!name || !description || !cathegory || !provPrice || !price ? <button disabled type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button> : <button type="submit" value='submit' className='button is-success is-fullwidth'>Guardar</button>}
                         </div>
                     </form>

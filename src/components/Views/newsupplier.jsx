@@ -103,132 +103,131 @@ function Newsupplier() {
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
 
     return redirect ? <Redirect to={''} /> : (
         <>
             {usertype === "admin" ? <Navbar /> : null }
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
-                    <div class="column is-9-desktop is-12-mobile">
+                    <div className="column is-9-desktop is-12-mobile">
                         <Breadcrum  parent='Inicio' children='Nuevo Proveedor' />
                         <Hero title='Nuevo Proveedor' subtitle="Alta de proveedor"/>
                         <br />
                         <form onSubmit={handleStepSubmit} style={{ overflowY: 'scroll', height: '450px', overflowX: 'hidden' }}>
                             <div className='columns'>
                                 <div className='column is-4'>
-                                    <h3 class="title is-4">General</h3>
-                                    <p class="subtitle is-6">Cómo se identifica y describe a su proveedor.</p>
+                                    <h3 className="title is-4">General</h3>
+                                    <p className="subtitle is-6">Cómo se identifica y describe a su proveedor.</p>
                                 </div>
                                 <div className='column is-8'>
-                                    <div class="field">
-                                        <label class="label">Identificador Proveedor</label>
-                                        <div class="control">
-                                            <input ref={nickNameRef} onChange={e => setNickName(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Identificador Proveedor</label>
+                                        <div className="control">
+                                            <input ref={nickNameRef} onChange={e => setNickName(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label class="label">Descripción</label>
-                                        <div class="control">
-                                            <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)} required class="textarea"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr style={{backgroundColor: '#e5eaed'}}/>
-                            <div className='columns'>
-                                <div className='column'>
-                                    <h3 class="title is-4">Información de Contacto</h3>
-                                    <p class="subtitle is-6">El nombre oficial y los datos de contacto de su proveedor.</p>
-                                </div>
-                                <div className='column'>
-                                    <div class="field">
-                                        <label class="label">Nombre Proveedor</label>
-                                        <div class="control">
-                                            <input ref={nameRef} onChange={e => setName(e.target.value)} required class="input" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="label">Compañía</label>
-                                        <div class="control">
-                                            <input ref={companyRef} onChange={e => setCompany(e.target.value)} required class="input" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="label">Teléfono</label>
-                                        <div class="control">
-                                            <input ref={phoneRef} onChange={e => setPhone(e.target.value)} required class="input" type="text" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='column'>
-                                    <div class="field">
-                                        <label class="label">Apellidos</label>
-                                        <div class="control">
-                                            <input ref={lastNameRef} onChange={e => setLastName(e.target.value)} required class="input" type="text" />
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="label">Email</label>
-                                        <div class="control">
-                                            <input ref={emailRef} onChange={e => setEmail(e.target.value)} required class="input" type="email" />
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label class="label">Teléfono Celular</label>
-                                        <div class="control">
-                                            <input ref={cellphoneRef} onChange={e => setCellphone(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Descripción</label>
+                                        <div className="control">
+                                            <textarea ref={descriptionRef} onChange={e => setDescription(e.target.value)} required className="textarea"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr style={{backgroundColor: '#e5eaed'}}/>
                             <div className='columns'>
+                                <div className='column'>
+                                    <h3 className="title is-4">Información de Contacto</h3>
+                                    <p className="subtitle is-6">El nombre oficial y los datos de contacto de su proveedor.</p>
+                                </div>
+                                <div className='column'>
+                                    <div className="field">
+                                        <label className="label">Nombre Proveedor</label>
+                                        <div className="control">
+                                            <input ref={nameRef} onChange={e => setName(e.target.value)} required className="input" type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="field">
+                                        <label className="label">Compañía</label>
+                                        <div className="control">
+                                            <input ref={companyRef} onChange={e => setCompany(e.target.value)} required className="input" type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="field">
+                                        <label className="label">Teléfono</label>
+                                        <div className="control">
+                                            <input ref={phoneRef} onChange={e => setPhone(e.target.value)} required className="input" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='column'>
+                                    <div className="field">
+                                        <label className="label">Apellidos</label>
+                                        <div className="control">
+                                            <input ref={lastNameRef} onChange={e => setLastName(e.target.value)} required className="input" type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="field">
+                                        <label className="label">Email</label>
+                                        <div className="control">
+                                            <input ref={emailRef} onChange={e => setEmail(e.target.value)} required className="input" type="email" />
+                                        </div>
+                                    </div>
+                                    <div className="field">
+                                        <label className="label">Teléfono Celular</label>
+                                        <div className="control">
+                                            <input ref={cellphoneRef} onChange={e => setCellphone(e.target.value)} required className="input" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style={{backgroundColor: '#e5eaed'}}/>
+                            <div className='columns'>
                                 <div className='column is-4'>
-                                    <h3 class="title is-4">Dirección</h3>
+                                    <h3 className="title is-4">Dirección</h3>
                                 </div>
                                 <div className='column is-4'>
-                                    <div class="field">
-                                        <label class="label">Calle</label>
-                                        <div class="control">
-                                            <input ref={streetRef} onChange={e => setStreet(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Calle</label>
+                                        <div className="control">
+                                            <input ref={streetRef} onChange={e => setStreet(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label class="label">Colonia</label>
-                                        <div class="control">
-                                            <input ref={suburbRef} onChange={e => setSuburb(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Colonia</label>
+                                        <div className="control">
+                                            <input ref={suburbRef} onChange={e => setSuburb(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label class="label">Estado</label>
-                                        <div class="control">
-                                            <input ref={stateRef} onChange={e => setState(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Estado</label>
+                                        <div className="control">
+                                            <input ref={stateRef} onChange={e => setState(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
                                 </div>
                                 <div className='column is-4'>
-                                    <div class="field">
-                                        <label class="label">Número</label>
-                                        <div class="control">
-                                            <input ref={street2Ref} onChange={e => setStreet2(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Número</label>
+                                        <div className="control">
+                                            <input ref={street2Ref} onChange={e => setStreet2(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label class="label">Código Postal</label>
-                                        <div class="control">
-                                            <input ref={postCodeRef} onChange={e => setPostCode(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">Código Postal</label>
+                                        <div className="control">
+                                            <input ref={postCodeRef} onChange={e => setPostCode(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
-                                    <div class="field">
-                                        <label class="label">País</label>
-                                        <div class="control">
-                                            <input ref={countryRef} onChange={e => setCountry(e.target.value)} required class="input" type="text" />
+                                    <div className="field">
+                                        <label className="label">País</label>
+                                        <div className="control">
+                                            <input ref={countryRef} onChange={e => setCountry(e.target.value)} required className="input" type="text" />
                                         </div>
                                     </div>
                                 </div>

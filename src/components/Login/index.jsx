@@ -1,29 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import firebase from '../../firebaseElements/firebase'
 import POS from '../../pos.png'
+import * as emailjs from 'emailjs-com'
 
 function Login() {
     const db = firebase.firestore();
+    const user = useRef();
+    const password = useRef();
+
+    const fields = [
+        user,
+        password
+    ]
 
     function singIn(email, password) {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                // Signed in 
-                // ...
+        let code = Math.floor(Math.random() * 1000000)
+        emailjs.send("service_uczuyod", "template_ixpyiqb", {
+            code: code,
+            to_email: email,
+        }, "user_ANxJpCrTZOWyOviagSs88").then(() => {
+            Swal.fire({
+                title: 'Ingrese el código',
+                input: 'text',
+                inputLabel: `Hemos enviado un código de seguridad de seis dígitos a ${email}`,
+                showCancelButton: true,
+                confirmButtonColor: '#41af4b',
+                cancelButtonColor: '#3a4953',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Ingrese un código.'
+                    }
+                    if(Number(value) !== code){
+                        return "Código incorrecto. Ingrese un código válido."
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (Number(result.value) === code) {
+                        firebase.auth().signInWithEmailAndPassword(email, password)
+                            .then((user) => {
+                                // Signed in 
+                                // ...
+                            })
+                            .catch((error) => {
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+                                Swal.fire(
+                                    '¡Error!',
+                                    'Usuario y/o contraseña incorrectos',
+                                    'error'
+                                )
+                            });
+                    }
+                    else {
+                        Swal.fire(
+                            '¡Error!',
+                            'Código incorrecto. Vuelva a iniciar sesión',
+                            'error'
+                        )
+                        fields.forEach(field => field.current.value = '')
+                    }
+                }
             })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode, '-----', errorMessage)
-                Swal.fire(
-                    '¡Error!',
-                    'Usuario y/o contraseña incorrectos',
-                    'error'
-                )
-
-            });
+        })
     }
 
     const [userType, setUserType] = useState("")
@@ -35,7 +78,6 @@ function Login() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 //getUserType(user, setUserType)
-                console.log(`Hay un user ${user.email}`)
                 setUserType(true)//teporal
             }
             else
@@ -47,6 +89,7 @@ function Login() {
         e.preventDefault();
         singIn(mail, pass)
     }
+
     return userType ? <Redirect to={'dashboard'} /> : (
         <div className="App">
             <section className="hero is-primary is-fullheight">
@@ -56,7 +99,7 @@ function Login() {
                             <div className="column is-5-tablet is-8-desktop">
                                 <div className='columns box'>
                                     <div className='column is-hidden-mobile is-flex is-flex-direction-row is-align-items-center is-justify-content-center'>
-                                        <img src={POS}  style={{width:'70%'}}/>
+                                        <img src={POS} style={{ width: '70%' }} />
                                     </div>
                                     <div className='column'>
                                         <form action="" onSubmit={handleSubmit} style={{ padding: '10%' }}>
@@ -68,13 +111,13 @@ function Login() {
 
                                             <div className="field">
                                                 <p className="control">
-                                                    <input onChange={e => setMail(e.target.value)} className="input" type="email" placeholder="Usuario" />
+                                                    <input ref={user} onChange={e => setMail(e.target.value)} className="input" type="email" placeholder="Usuario" />
                                                 </p>
                                             </div>
 
                                             <div className="field">
                                                 <p className="control">
-                                                    <input onChange={e => setPass(e.target.value)} className="input" type="password" placeholder="Contraseña" />
+                                                    <input ref={password} onChange={e => setPass(e.target.value)} className="input" type="password" placeholder="Contraseña" />
                                                 </p>
                                             </div>
 

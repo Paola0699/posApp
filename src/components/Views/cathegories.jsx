@@ -85,42 +85,41 @@ function Cathegories() {
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
     return  redirect ? <Redirect to={''} /> : (
         <>
             {usertype === "admin" ? <Navbar /> : null }
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         <Leftbar />
                     </div>
-                    <div class="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
+                    <div className="column is-9-desktop is-12-mobile" style={{ overflow: 'scroll' }}>
                         <Breadcrum  parent='Inicio' children='Categorias'/>
                         <Hero title='Categorías' subtitle='Todas las Categorías' />
                         <br />
                         <div className='columns'>
                             <div className='column'>
                                 <div className='card'>
-                                    <header class="card-header">
-                                        <p class="card-header-title">
+                                    <header className="card-header">
+                                        <p className="card-header-title">
                                             Nueva Categoría</p>
                                     </header>
-                                    <div class="card-content">
-                                        <div class="content">
+                                    <div className="card-content">
+                                        <div className="content">
                                             <form onSubmit={handleStepSubmit}>
-                                                <div class="field">
-                                                    <label class="label">Nombre</label>
-                                                    <div class="control">
-                                                        <input required ref={nameRef} onChange={e => setName(e.target.value)} class="input" type="text" placeholder="e.g Bebidas" />
+                                                <div className="field">
+                                                    <label className="label">Nombre</label>
+                                                    <div className="control">
+                                                        <input required ref={nameRef} onChange={e => setName(e.target.value)} className="input" type="text" placeholder="e.g Bebidas" />
                                                     </div>
                                                 </div>
 
-                                                <div class="field">
-                                                    <label class="label">Descripción</label>
-                                                    <div class="control">
-                                                        <textarea required ref={descriptionRef} onChange={e => setDescription(e.target.value)} class="textarea" placeholder="Escribe una breve descripción sobre la categoría"></textarea>
+                                                <div className="field">
+                                                    <label className="label">Descripción</label>
+                                                    <div className="control">
+                                                        <textarea required ref={descriptionRef} onChange={e => setDescription(e.target.value)} className="textarea" placeholder="Escribe una breve descripción sobre la categoría"></textarea>
                                                     </div>
                                                 </div>
 
@@ -132,12 +131,12 @@ function Cathegories() {
                             </div>
                             <div className='column'>
                                 <div className='card'>
-                                    <header class="card-header">
-                                        <p class="card-header-title">
+                                    <header className="card-header">
+                                        <p className="card-header-title">
                                             Categorías</p>
                                     </header>
-                                    <div class="card-content">
-                                        <div class="content">
+                                    <div className="card-content">
+                                        <div className="content">
                                             {cathegoriesList ? <DataTable
                                                 noHeader={true}
                                                 columns={columns}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 function close() {
     firebase.auth().signOut().then(function () {
-        console.log('Sign-out uccessful')
+        
     }).catch(function (error) {
         // An error happened.
     });

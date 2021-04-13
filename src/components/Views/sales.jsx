@@ -120,6 +120,7 @@ function Sales() {
     const [defaultDate, setDefaultDate] = useState();
     const [redirect, setRedirect] = useState(false);
     const [usertype, setUser] = useState('')
+    const [userPhone , setUserPhone] = useState('')
 
 
 
@@ -130,16 +131,15 @@ function Sales() {
                     setUser("admin")
                 }
                 else setUser("user")
+                setUserPhone(doc.data().telefono)
             })
         } else {
             setRedirect(true)
-            console.log("No estoy loggeado")
         }
     });
 
     useEffect(() => {
         getAllData()
-        console.log('effect')
     }, [startDate, finalDate])
     useEffect(() => {
         const today = new Date()
@@ -148,7 +148,6 @@ function Sales() {
         let customDate = `${today.getFullYear()}-${month}-${day}`
 
 
-        console.log(customDate)
         setDefaultDate(customDate)
         setStartDate(customDate)
         setFinalDate(customDate)
@@ -192,34 +191,34 @@ function Sales() {
         <>
 
             <Navbar />
-            <div class="container">
-                <div class="columns is-mobile">
-                    <div class="column is-3-desktop is-hidden-mobile">
+            <div className="container">
+                <div className="columns is-mobile">
+                    <div className="column is-3-desktop is-hidden-mobile">
                         {usertype === "admin" ? <Leftbar /> : <Navbaruser />}
                     </div>
-                    <div class="column is-9-desktop is-12-mobile" style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
+                    <div className="column is-9-desktop is-12-mobile" style={{ overflowY: 'scroll', height: '650px', overflowX: 'hidden' }}>
                         <Breadcrum parent='Inicio' children='Ventas' />
                         <Hero title="Ventas Generales" subtitle="Consulta las ventas generales" />
                         <br />
                         <div className='columns'>
                             <div className='column is-6'>
-                                <div class="field">
-                                    <label class="label">Fecha de inicio</label>
-                                    <div class="control">
-                                        <input defaultValue={defaultDate} onChange={e => setStartDate(e.target.value)} class="input" type="date" placeholder="Nombre del producto" />
+                                <div className="field">
+                                    <label className="label">Fecha de inicio</label>
+                                    <div className="control">
+                                        <input defaultValue={defaultDate} onChange={e => setStartDate(e.target.value)} className="input" type="date" placeholder="Nombre del producto" />
                                     </div>
                                 </div>
                             </div>
                             <div className='column is-6'>
-                                <div class="field">
-                                    <label class="label">Fecha de Fin</label>
-                                    <div class="control">
-                                        <input defaultValue={defaultDate} onChange={e => setFinalDate(e.target.value)} class="input" type="date" placeholder="Nombre del producto" />
+                                <div className="field">
+                                    <label className="label">Fecha de Fin</label>
+                                    <div className="control">
+                                        <input defaultValue={defaultDate} onChange={e => setFinalDate(e.target.value)} className="input" type="date" placeholder="Nombre del producto" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="table-container">
+                        <div className="table-container">
                             <table className='table' style={{ marginBottom: '2%', textAlign: 'center', width: '100%' }}>
                                 <tr>
                                     <th className='ocultar-div'><small>Pagos </small><br />Efectivo</th>
@@ -250,11 +249,11 @@ function Sales() {
             {orderDetail ? <Modal open={open} onClose={() => setOpen(false)} center >
 
                 <div style={{ padding: '3rem' }}>
-                    <div class="container">
-                        <h1 class="title">
+                    <div className="container">
+                        <h1 className="title">
                             {orderDetail.id}
                         </h1>
-                        <h2 class="subtitle">
+                        <h2 className="subtitle">
                             {orderDetail.date.toDate().toLocaleString('es-MX', {
                                 weekday: 'long',
                                 year: 'numeric',
@@ -266,8 +265,8 @@ function Sales() {
                     <div className="modal-body">
                         <br />
                         <br />
-                        <div class="table-container">
-                            <table class="table is-fullwidth">
+                        <div className="table-container">
+                            <table className="table is-fullwidth">
                                 <tr>
                                     <th>Producto</th>
                                     <th>Cantidad</th>
